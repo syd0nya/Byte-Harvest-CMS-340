@@ -1,2 +1,0 @@
-## 
-Fix error in terms of list index out of range message
