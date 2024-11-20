@@ -74,8 +74,8 @@ class Player(pygame.sprite.Sprite):
 
 
 	def use_seed(self):
-
-		pass
+		# Plant a seed
+		self.soil_layer.planet_seed(self.target_pos, self.selected_seed)
 
 	def import_assets(self):
 		self.animations = {'up': [],'down': [],'left': [],'right': [],
