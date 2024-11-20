@@ -99,3 +99,25 @@ class Tree(Generic):
 					surf = self.apple_surf, 
 					groups = [self.apple_sprites,self.groups()[0]],
 					z = LAYERS['fruit'])
+
+class Particle(GenericFloor):
+
+    # Inherit constructor
+    def __init__(self, pos, surf, groups, z, duration = 200):
+        super.__init__(pos, surf, groups, z)
+        self.start_time = pygame.time.get_ticks() # Get time of creation
+        self.duration = duration # Store duration input as an attribute of the object
+
+        # White surface over object
+        mask_surf = pygame.mask.from_surface(self.image)
+        new_surf = mask_surf.to_surface() # silhouette of original surface
+        new_surf.set_colorkey((0,0,0)) # turning silhouette pure white
+        self.image = new_surf
+
+    # Self update method to clear sprite
+    def update(self, dt):
+
+        # Check duration of sprite life
+        current_time = pygame.time.get_ticks()
+        if current_time - self.start_time > self.duration:
+            self.kill()
