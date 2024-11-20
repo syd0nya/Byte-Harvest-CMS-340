@@ -44,6 +44,14 @@ class Player(pygame.sprite.Sprite):
 		self.seed_index = 0
 		self.selected_seed = self.seeds[self.seed_index]
 
+		# Inventory
+		self.item_inventory = { # Change crops to what we want them to be - Maggie 11/20
+			'wood': 0,
+			'apple': 0,
+			'corn': 0,
+			'tomato': 0
+		}
+
 		# interaction
 		self.tree_sprites = tree_sprites
 
