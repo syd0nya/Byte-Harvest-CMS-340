@@ -4,6 +4,16 @@ from sprites import GenericFloor
 from random import randint, choice
 from constants import *
 
+# Sky class
+class Sky:
+    def __init__(self):
+        self.display_surface = pygame.display.get_surface()
+        self.full_surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    def display(self, dt):
+        self.display_surface.blit(self.full_surf, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
+        
+
 class Drop(GenericFloor):
     def __init__(self, surf, pos, moving, groups, z):
         
