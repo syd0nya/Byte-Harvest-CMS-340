@@ -14,9 +14,10 @@ SCREEN_HEIGHT = userScreen.current_h - 60 #720
 FARM_HEIGHT = SCREEN_HEIGHT * 0.3
 TILE_SIZE = 64
 
-# Text page settings (room for 55 characters across)
-PAGE_WIDTH = 800
+# Text page settings
+PAGE_WIDTH = 1000
 PAGE_HEIGHT = 600
+MAX_CHARACTERS = 64
 
 # overlay positions 
 OVERLAY_POSITIONS = {
