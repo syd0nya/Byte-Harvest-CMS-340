@@ -47,10 +47,7 @@ class Game:
 
 			# Does the text editor need to go to another line?
 			if self.editors[-1].userInput.__len__() == MAX_CHARACTERS:
-				self.i += 1
-				self.editors.append(Editor())
-				self.editors[self.i].textRect.center = (SCREEN_WIDTH/2 - 450, SCREEN_HEIGHT/5 + (30*self.i))
-				self.editors[self.i].pageOffset = 50 * self.i
+				self.newline()
 
 			# Update the latest line as the user types
 			self.editors[-1].run()
@@ -65,6 +62,28 @@ class Game:
 
 			# Update the screen
 			pygame.display.update()
+
+	# Make a new line
+	def newline(self):
+		# Increment number of lines
+		self.i += 1
+
+		# Make new line
+		self.editors.append(Editor())
+		self.editors[self.i].textRect.center = (SCREEN_WIDTH/2 - 450, SCREEN_HEIGHT/5 + (30*self.i))
+		self.editors[self.i].pageOffset = 50 * self.i
+
+		# Was there carry over from the previous line?
+		prevLine = self.editors[-2].userInput
+		lastLetter = prevLine[-1]
+		if (lastLetter >= 'a') and (lastLetter <= 'z'):
+			# If there was, split the previous line and grab the last word
+			prevLineLast = prevLine.split()[-1]
+			
+			# Add prevLineLast to the new line and remove it from the previous
+			self.editors[-1].userInput += prevLineLast
+			self.editors[-2].userInput = self.editors[-2].userInput.removesuffix(prevLineLast)
+			
 
 	# Download file from the user's typing
 	def download(self):
