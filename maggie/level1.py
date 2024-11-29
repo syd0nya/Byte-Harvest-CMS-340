@@ -18,8 +18,7 @@ class Level:
     def __init__(self, farmScreen):
         print("levelconstructor")
         # Constructor
-        # Get the display surface
-        self.screen = pygame.display.get_surface()
+        # Set up the farm surface on which everything will be drawn
         self.farmScreen = farmScreen
 
         # Make sprite groups for player call later
@@ -64,7 +63,7 @@ class Level:
         # Upload map and other sprites
         sprite_data = load_pygame('../data/map.tmx')
 
-        # house 
+        # Import house layers 
         for layer in ['HouseFloor', 'HouseFurnitureBottom']:
             for x, y, surf in sprite_data.get_layer_by_name(layer).tiles():
                 Generic((x * TILE_SIZE,y * TILE_SIZE), surf, self.all_sprites, LAYERS['house bottom'])
@@ -73,7 +72,7 @@ class Level:
             for x, y, surf in sprite_data.get_layer_by_name(layer).tiles():
                 Generic((x * TILE_SIZE,y * TILE_SIZE), surf, self.all_sprites, LAYERS['main'])
 
-		# Fence
+		# Import fence
         for x, y, surf in sprite_data.get_layer_by_name('Fence').tiles():
             Generic((x * TILE_SIZE,y * TILE_SIZE), surf, [self.all_sprites, self.collision_sprites])
 
@@ -99,9 +98,9 @@ class Level:
         for obj in sprite_data.get_layer_by_name('Player'):
             # Get the player
             if obj.name == 'Start':
-                self.player = Player((obj.x*TILE_SIZE, obj.y*TILE_SIZE), self.all_sprites, self.collision_sprites,
+                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites,
                                      self.tree_sprites, self.interactive_sprites, self.soilLayer, self.toggle_shop)
-            
+                
             # Get the shop as an interactive sprite
             elif obj.name == 'Trader':
                 Interaction((obj.x*TILE_SIZE, obj.y*TILE_SIZE), (obj.width, obj.height), self.interactive_sprites,
@@ -167,11 +166,10 @@ class Level:
                 # Finally, remove the P marker from the ground grid
                 self.soilLayer.grid[plant.x // TILE_SIZE][plant.y // TILE_SIZE].remove('P')
     
-    def run(self, dt, screenPortion):
+    def run(self, dt):
         # Run the entire level before updating to the display
         # Fill the farm surface with black so that map edges don't attempt to overfill
         self.farmScreen.fill('darkblue')
-        self.screen.blit(self.farmScreen, screenPortion)
 
         # Draw all sprites
         self.all_sprites.custom_draw(self.player)
