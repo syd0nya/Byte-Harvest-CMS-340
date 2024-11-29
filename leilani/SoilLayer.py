@@ -29,7 +29,7 @@ class SoilLayer():
         
         # make and initialize soil grid and tilled soil grid
         self.makeSoilGrid()
-        self.makeTilledSoilGrid
+        self.makeTilledSoilGrid()
 
         # soil graphics
         self.soilImg = import_folder_dict('../graphics/soil/')
