@@ -183,3 +183,6 @@ class SoilLayer():
             return True
         else:
             return False
+
+    def createSoilTile(self):
+	    pass
