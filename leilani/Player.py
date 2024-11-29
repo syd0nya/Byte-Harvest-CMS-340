@@ -1,8 +1,9 @@
 import pygame
 import constants
 import random
-from Timer import Timer
+from timer import Timer
 from SoilLayer import SoilLayer
+from support import import_folder
 
 class Player:
     def __init__(self, playerPos, group, collisionSprites, treeGraphics, soilLayer, action):
