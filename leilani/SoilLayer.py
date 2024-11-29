@@ -15,6 +15,8 @@ import random
 from pytmx.util_pygame import load_pygame
 from WaterTile import WaterTile
 from Plant import Plant
+from support import import_folder
+from support import import_folder_dict
 
 class SoilLayer():
     def __init__(self, allSprites):
