@@ -16,6 +16,7 @@ import pygame
 import settings
 import random
 from SoilLayer import SoilLayer
+from support import import_folder
 
 class Plant(pygame.sprite.Sprite):
     def __init__(self, plantType, gorups, soil):
