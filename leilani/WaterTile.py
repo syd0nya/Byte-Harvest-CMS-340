@@ -1,6 +1,5 @@
 import pygame
-import settings
-
+from constants import *
 class WaterTile(pygame.sprite.Sprite):
 	def __init__(self, pos, surf, groups):
 		# same logic as soilTile, just different layer... image imput will be different
