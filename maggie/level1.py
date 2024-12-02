@@ -7,16 +7,15 @@ from overlay import Overlay
 from sprites import Generic, Water, WildFlower, Tree, Interaction, Particle
 from pytmx.util_pygame import load_pygame
 from support import *
-from transition import Transition
+from transition1 import Transition
 from soil import SoilLayer
 from sky import Rain, Sky
 from random import randint
-from menu import Menu
+from menu1 import Menu
 from cameraGroup import CameraGroup
 
 class Level:
     def __init__(self, farmScreen):
-        print("levelconstructor")
         # Constructor
         # Set up the farm surface on which everything will be drawn
         self.farmScreen = farmScreen
@@ -47,7 +46,7 @@ class Level:
         self.rain = Rain(self.all_sprites)
 
         # Make the menu
-        self.menu = Menu(self.player, self.toggle_shop)
+        self.menu = Menu(self.player, self.toggle_shop, self.farmScreen)
         self.menu_active = False # Make sure the menu isn't immediately active
 
         # Import the music and set music settings
@@ -55,10 +54,7 @@ class Level:
         pygame.mixer.music.play(-1) # Infinite loops
         pygame.mixer.music.set_volume(0.0)
 
-        print("init complete")
-
     def setup(self):
-        print("setup started")
         # General set up
         # Upload map and other sprites
         sprite_data = load_pygame('../data/map.tmx')
@@ -83,7 +79,7 @@ class Level:
 
         # Import Trees
         for tree in sprite_data.get_layer_by_name('Trees'):
-            Tree((tree.x*TILE_SIZE, tree.y*TILE_SIZE), tree.image, [self.all_sprites, self.collision_sprites, self.tree_sprites],
+            Tree((tree.x, tree.y), tree.image, [self.all_sprites, self.collision_sprites, self.tree_sprites],
                  tree.name, self.player_add)
 
         # Import Wildflowers
@@ -103,19 +99,16 @@ class Level:
                 
             # Get the shop as an interactive sprite
             elif obj.name == 'Trader':
-                Interaction((obj.x*TILE_SIZE, obj.y*TILE_SIZE), (obj.width, obj.height), self.interactive_sprites,
+                Interaction((obj.x, obj.y), (obj.width, obj.height), self.interactive_sprites,
                             obj.name)
                 
             # Get the bed as an interactive sprite (only one left in player group)
             else:
-                Interaction((obj.x*TILE_SIZE, obj.y*TILE_SIZE), (obj.width, obj.height), self.interactive_sprites,
+                Interaction((obj.x, obj.y), (obj.width, obj.height), self.interactive_sprites,
                             obj.name)
                 
         # Import ground
         Generic((0,0), pygame.image.load('../graphics/world/ground.png').convert_alpha(), self.all_sprites, LAYERS['ground'])
-
-        print("set up complete")
-        print(self.all_sprites)
 
     def player_add(self, item):
         # Add item to player's inventory
@@ -140,8 +133,8 @@ class Level:
             self.soilLayer.remove_water
 
         # Delete and remake apples on trees to randomize positions
-        for tree in self.tree_sprites.sprites():
-            for apple in tree.apple_sprites.sprites():
+        for tree in self.tree_sprites:
+            for apple in tree.apple_sprites:
                 apple.kill()
             tree.create_fruit
         
@@ -169,7 +162,7 @@ class Level:
     def run(self, dt):
         # Run the entire level before updating to the display
         # Fill the farm surface with black so that map edges don't attempt to overfill
-        self.farmScreen.fill('darkblue')
+        self.farmScreen.fill('black')
 
         # Draw all sprites
         self.all_sprites.custom_draw(self.player)
