@@ -4,6 +4,7 @@
 import pygame
 from settings import *
 from myTimer import Timer
+from pomodoroTimer import Pomodoro
 
 class Menu:
     def __init__(self, player, toggle_menu, farmScreen):
@@ -175,7 +176,6 @@ class Menu:
 
             # Up the counter
             j += 1
-            print(i)
 
     def input(self):
         # Get the user's input for menu interaction
